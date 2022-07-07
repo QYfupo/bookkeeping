@@ -9,24 +9,31 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "type",
-  data(){
-    return{
-      type:'-',//'-'代表支出，'+'代表收入
-    }
-  },
-  methods:{
-    selectedType(type){
+<script lang="ts">
+import Vue from "vue";
+import {Component, Prop} from "vue-property-decorator";
+//记住这个库：vue-property-decorator
+@Component
+export default class Types extends Vue{
+    @Prop(Number)xxx:number|undefined;
+    //@Prop是装饰器，告诉vue引入了外部属性xxx
+  //Number是告诉vue，运行时xxx的类型是number
+  //number|undefined 是告诉tsc编译时xxx的类型是number或undefined
+  //好处：ts更严谨，错误提醒更智能
+
+    type ='-';//'-'代表支出，'+'代表收入
+    selectedType(type:string){
       if(type !== '-' && type !== '+'){
         throw new Error('type is unknown')
       }else{
         this.type = type
       }
+    };
+    mounted(){
+      if(this.xxx === undefined){
+        console.log('xxx是undefined')
+      }else{console.log(this.xxx.toString())}
     }
-  }
-
 }
 </script>
 
