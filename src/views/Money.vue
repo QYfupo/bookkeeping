@@ -2,7 +2,7 @@
     <div>
       <layout class-prefix="layout">
         <number-pad />
-        <type :xxx="3"/>
+        <type />
         <notes />
         <tags />
     </layout>
