@@ -71,9 +71,9 @@ export default {
   padding: 16px;
   flex-grow: 1;
   flex-direction: column-reverse;
-  flex-wrap: wrap;
   > .currentTags{
     display: flex;
+    flex-wrap: wrap;
     > li{
       display: flex;
       flex-direction: row;
@@ -145,6 +145,8 @@ export default {
     text-align: right;
     padding:9px 16px;
     line-height: 72px;
+    box-shadow: inset 0 -5px 5px -5px fade-out(black,0.8),
+                inset 0 5px 5px -5px fade-out(black,0.8);
   }
   >.buttons{
     @extend %clearFix;
