@@ -1,20 +1,43 @@
 <template>
   <div class="tags">
     <div class="newTag">
-      <button>新增标签</button>
+      <button @click="creatTag">新增标签</button>
     </div>
     <ul class="currentTags">
-      <li>衣</li>
-      <li>食</li>
-      <li>住</li>
-      <li>行</li>
+      <li v-for="tag in tagSource"
+      :class="selectedTag.indexOf(tag) >= 0 && 'selected'"
+      @click="toggle(tag)">{{ tag }}</li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-export default {
-  name: "tags"
+import Vue from 'vue';
+import {Component,Prop} from 'vue-property-decorator';
+@Component
+export default class Tags extends Vue{
+  @Prop(Array)tagSource:string[] | undefined;
+  selectedTag:string[] = [];
+  toggle(tag:string){
+    const index = this.selectedTag.indexOf(tag)
+    if(this.selectedTag.indexOf(tag) >= 0){
+      this.selectedTag.splice(index,1)
+    }else{
+      this.selectedTag.push(tag)
+    }
+  };
+  creatTag(){
+    const name = window.prompt('请输入新增标签')?.toString().trim()
+    if(name == undefined || name.length === 0){
+      window.alert('标签不能为空')
+    }else{
+       if(this.tagSource){
+         // this.tagSource.push(name!) 不能更改外部属性
+         this.$emit('update:tagSource',[...this.tagSource,name])
+       }
+    }
+  }
+
 }
 </script>
 
@@ -38,6 +61,9 @@ export default {
       background: #d9d9d9;
       height:24px;
       border-radius:(24px/2) ;
+      &.selected{
+        background: yellowgreen;
+      }
     }
   }
   > .newTag{
