@@ -22,6 +22,7 @@ export default class Types extends Vue{
       }else{
         this.type = type
       }
+      this.$emit('update:value',type)
     };
 }
 </script>
