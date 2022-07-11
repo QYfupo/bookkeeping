@@ -2,9 +2,9 @@
     <div>
       <layout class-prefix="layout">
         <number-pad :value.sync="record.amount" @submit="saveRecord" />
-        <type :value.sync="record.type" />
         <notes @update:value="onUpdateNote"/>
         <tags :tag-source.sync="tag" @update:value="onUpdateSelected"/>
+        <type :value.sync="record.type" />
       </layout>
     </div>
 </template>

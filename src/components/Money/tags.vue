@@ -48,6 +48,7 @@ export default class Tags extends Vue{
   padding: 16px;
   flex-grow: 1;
   flex-direction: column-reverse;
+  overflow: auto;
   > .currentTags{
     display: flex;
     flex-wrap: wrap;
@@ -57,13 +58,15 @@ export default class Tags extends Vue{
       font-size: 14px;
       padding:0 16px;
       margin-right:12px;
+      margin-bottom: 5px;
+      margin-top: 5px;
       align-items: center;
       text-align: center;
       background: #d9d9d9;
       height:24px;
       border-radius:(24px/2) ;
       &.selected{
-        background: yellowgreen;
+        background: #ffd944;
       }
     }
   }

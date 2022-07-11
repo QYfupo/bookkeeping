@@ -31,7 +31,7 @@ export default class Types extends Vue{
   display: flex;
   flex-direction: row;
   height:64px;
-  background: #c4c4c4;
+  background: #ffd944;
   text-align: center;
   font-size: 24px;
   > li{
@@ -45,7 +45,7 @@ export default class Types extends Vue{
       width: 100%;
       bottom: 0;
       left: 0;
-      height: 4px;
+      height: 3px;
       background: #333;
     }
   }
