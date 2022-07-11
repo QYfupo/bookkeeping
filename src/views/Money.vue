@@ -1,8 +1,8 @@
 <template>
     <div>
       <layout class-prefix="layout">
-        <number-pad @update:value="onUpdateAmount" />
-        <type @update:value="onUpdateType"/>
+        <number-pad :value.sync="record.amount" />
+        <type :value.sync="record.type" />
         <notes @update:value="onUpdateNote"/>
         <tags :tag-source.sync="tag" @update:value="onUpdateSelected"/>
    {{record}}
@@ -33,14 +33,7 @@ export default  class Money extends Vue{
     console.log(value)
     this.record.tag = value
   };
-  onUpdateAmount(value:number){
-    console.log(value)
-    this.record.amount = value
-  };
-  onUpdateType(value:string){
-    console.log(value)
-    this.record.type = value
-  };
+
   onUpdateNote(value:string){
     console.log(value)
     this.record.notes = value
