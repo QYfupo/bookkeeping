@@ -29,7 +29,7 @@ import {Component, Prop} from 'vue-property-decorator';
 export default class NumberPad extends Vue{
   @Prop() readonly value! : number;
 
-  output = this.value?.toString() || "";
+  output = this.value?.toString()||'0';
   //  output = "0"
 
   InputContent(event:MouseEvent){

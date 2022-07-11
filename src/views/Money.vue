@@ -5,7 +5,7 @@
         <type :value.sync="record.type" />
         <notes @update:value="onUpdateNote"/>
         <tags :tag-source.sync="tag" @update:value="onUpdateSelected"/>
-    </layout>
+      </layout>
     </div>
 </template>
 
@@ -15,20 +15,22 @@ import NumberPad from "@/components/Money/numberPad.vue";
 import Type from "@/components/Money/types.vue";
 import Notes from "@/components/Money/notes.vue";
 import Tags from "@/components/Money/tags.vue";
-import {Component} from 'vue-property-decorator';
+import {Component,Watch} from 'vue-property-decorator';
+
 
  type Record = {
    tag:string[];
    notes:string;
    type:string;
    amount:number;
- }
-@Component({components: {Tags, Notes, Type, NumberPad}})
+   createTime ?:Date;
+ };
 
+@Component({components: {Tags, Notes, Type, NumberPad}})
 export default  class Money extends Vue{
   tag=['衣','食','住','行'];
   record:Record = {tag:[],notes:'',type:'-',amount:0};
-  recordList:Record[] = [];
+  recordList:Record[]=JSON.parse(window.localStorage.getItem('recordList') || '[]');
 
   onUpdateSelected(value:string[]){
     this.record.tag = value
@@ -38,10 +40,13 @@ export default  class Money extends Vue{
     this.record.notes = value
   };
   saveRecord(){
-    const deepCloneRecord = JSON.parse(JSON.stringify(this.record))
+    const deepCloneRecord:Record= JSON.parse(JSON.stringify(this.record))
+    deepCloneRecord.createTime = new Date()
     this.recordList.push(deepCloneRecord)
-    window.localStorage.setItem('recordList',JSON.stringify(this.record))
-    console.log('1111',this.recordList)
+  };
+  @Watch('recordList')
+  onRecordChange(){
+    window.localStorage.setItem('recordList',JSON.stringify(this.recordList))
   }
 }
 </script>
