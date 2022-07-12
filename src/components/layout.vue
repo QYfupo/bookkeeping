@@ -19,6 +19,7 @@ export default {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  background:#f4f4f4 ;
 }
 
 .content {

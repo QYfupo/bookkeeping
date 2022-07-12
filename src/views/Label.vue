@@ -7,7 +7,7 @@
                  :to="`/label/edit/${item.id}`"><span>{{ item.name }}</span><Icons name="right" /></router-link>
     </div>
     <div class="createTag-wrapper">
-    <button class="createTag" @click="creatTag">新建标签</button>
+   <Button class="createTag" @click.native="creatTag">新增标签</Button>
     </div>
     </layout>
     </div>
@@ -17,9 +17,12 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import tagListModel from '@/models/tagsListModel';
+import Button from '@/components/Button.vue';
 
 tagListModel.fetch()//获取data，加载数据
-@Component
+@Component({
+  components: {Button}
+})
 export default class Label extends Vue{
     tag=tagListModel.data;
     creatTag(){

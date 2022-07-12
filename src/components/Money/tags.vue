@@ -49,6 +49,7 @@ export default class Tags extends Vue{
   flex-grow: 1;
   flex-direction: column-reverse;
   overflow: auto;
+  background: white;
   > .currentTags{
     display: flex;
     flex-wrap: wrap;

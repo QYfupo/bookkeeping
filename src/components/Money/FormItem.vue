@@ -12,9 +12,10 @@
 import Vue from 'vue';
 import {Component, Prop, Watch} from 'vue-property-decorator';
 @Component
-export default class Note extends Vue{
+export default class FormItem extends Vue{
   @Prop({required:true}) fieldName!:string;
   @Prop() placeholder?:string;
+
   value='';
   @Watch('value')
   onValueChanged(value: string) {
@@ -25,9 +26,9 @@ export default class Note extends Vue{
 
 <style scoped lang="scss">
 .notes{
+  background: white;
   font-size: 14px;
   display: flex;
-  background: #f5f5f5;
   padding: 0 16px;
   align-items: center;
   >.name{
@@ -35,7 +36,7 @@ export default class Note extends Vue{
   }
   > input{
     border-style: none;
-    height:64px;
+    height:44px;
     flex-grow: 1;
     background: transparent;
   }
