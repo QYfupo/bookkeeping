@@ -3,7 +3,7 @@
       <layout class-prefix="layout">
         {{recordList}}
         <number-pad :value.sync="record.amount" @submit="saveRecord" />
-        <notes @update:value="onUpdateNote"/>
+        <notes @update:value="onUpdateNote" field-name="备注" placeholder="点击添加备注"/>
         <tags :tag-source.sync="tag" @update:value="onUpdateSelected"/>
         <type :value.sync="record.type" />
       </layout>
