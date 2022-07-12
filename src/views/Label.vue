@@ -2,8 +2,7 @@
     <div>
   <layout>
     <ol class="tags">
-    <li v-for="item in tag" :key="item"><span>{{ item }}</span><Icons name="right" /></li>
-
+    <li v-for="item in tag" :key="item.id"><span>{{ item.name }}</span><Icons name="right" /></li>
     </ol>
     <div class="createTag-wrapper">
     <button class="createTag" @click="creatTag">新建标签</button>
