@@ -4,7 +4,10 @@
     <div class="tags">
     <router-link class="tag" v-for="item in tag"
                  :key="item.id"
-                 :to="`/label/edit/${item.id}`"><span>{{ item.name }}</span><Icons name="right" /></router-link>
+                 :to="`/label/edit/${item.id}`">
+      <span>{{ item.name }}</span>
+      <Icons name="right" />
+    </router-link>
     </div>
     <div class="createTag-wrapper">
    <Button class="createTag" @click.native="creatTag">新增标签</Button>
