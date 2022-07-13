@@ -1,15 +1,17 @@
 <template>
 <layout>
   <div class="navBar">
-  <Icons class="leftIcon" name="left"></Icons>
-  <span class="title">编辑标签</span>
-   <span class="rightIcon"></span>
+    <Icons class="leftIcon" name="left"></Icons>
+    <span class="title">编辑标签</span>
+    <span class="rightIcon"></span>
   </div>
   <div class="FormItem-wrapper">
-  <FormItem field-name="标签名" placeholder="点击输入标签名"/>
+    <FormItem field-name="标签名" placeholder="点击输入标签名"
+    :value="tag.name"
+    />
   </div>
   <div class="button-wrapper">
-  <Button>删除标签</Button>
+    <Button>删除标签</Button>
   </div>
 </layout>
 </template>
@@ -25,13 +27,15 @@ import Button from '@/components/Button.vue';
   components: {Button, FormItem}
 })
 export default class EditedLabel extends Vue{
+  tag?:{id:string,name:string}=undefined
+
   created(){
     const id = this.$route.params.id
     tagsListModel.fetch()//获取数据
     const tag = tagListModel.data.filter(tag => tag.id === id)[0]
     //让tag和this.$route.id关联
     if(tag){
-      console.log(tag)
+     this.tag = tag
     }else{
       this.$router.replace('/404')
     }
