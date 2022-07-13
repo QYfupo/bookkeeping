@@ -15,12 +15,12 @@
  import Vue from 'vue';
 import NumberPad from "@/components/Money/numberPad.vue";
 import Type from "@/components/Money/types.vue";
-import FormItem from "@/components/Money/FormItem.vue";
+import FormItem from "@/components/FormItem.vue";
 import Tags from "@/components/Money/tags.vue";
 import {Component,Watch} from 'vue-property-decorator';
 
 import recordListModel from '@/models/recordListModel';
-import tagListModel from '@/models/tagsListModel';
+import tagListModel from '@/models/tagListModel';
 
 const tags = tagListModel.fetch();
 @Component({components: {Tags, FormItem, Type, NumberPad}})
