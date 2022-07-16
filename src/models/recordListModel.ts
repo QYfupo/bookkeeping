@@ -1,10 +1,12 @@
 const localStoryKey = 'recordList'
 const recordListModel = {
+    data:[],
     fetch(){
-       return JSON.parse(window.localStorage.getItem(localStoryKey) || '[]') as RecordItem[]
+      this.data =JSON.parse(window.localStorage.getItem(localStoryKey) || '[]')
+       return this.data
     },
-    save(data:RecordItem[]){
-        window.localStorage.setItem(localStoryKey,JSON.stringify(data))
+    save(){
+        window.localStorage.setItem(localStoryKey,JSON.stringify(this.data))
     },
     clone(data:RecordItem | RecordItem[]){
        return JSON.parse(JSON.stringify(data))

@@ -1,4 +1,5 @@
 type RecordItem = {
+    data:RecordItem[];
     tag:string[];
     notes:string;
     type:string;
