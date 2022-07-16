@@ -19,7 +19,6 @@
  <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import tagListModel from '@/models/tagListModel';
 import Button from '@/components/Button.vue';
 
 window.tagList//获取data，加载数据
@@ -30,12 +29,7 @@ export default class Label extends Vue{
     tag=window.tagList;
     creatTag(){
       const name = window.prompt('请输入标签名')
-      if(name){
-        const message = tagListModel.create(name)
-       if(message==='duplicated'){
-         window.prompt('标签重复')
-       }
-      }
+      if(name){ window.createTag(name)}
     }
 }
 </script>

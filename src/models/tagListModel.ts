@@ -15,21 +15,20 @@ const tagListModel:TagListModel = {
         this.save()
         return 'success'
     },
-    updateTag: function (id: string, name: string) {
-        const idList = this.data.map(item => id = item.id);
-        if (idList.indexOf(id)){
+    updateTag(id, name) {
+        const idList = this.data.map(item => item.id);
+        if (idList.indexOf(id) >= 0) {
             const names = this.data.map(item => item.name);
             if (names.indexOf(name) >= 0) {
-                window.alert('标签名重复')
                 return 'duplicated';
             } else {
                 const tag = this.data.filter(item => item.id === id)[0];
                 tag.name = name;
                 this.save();
-                return 'success'
+                return 'success';
             }
-        }else{
-            return 'not found'
+        } else {
+            return 'not found';
         }
     },
     save(){

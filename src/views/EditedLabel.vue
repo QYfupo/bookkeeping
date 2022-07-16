@@ -19,32 +19,26 @@
 <script lang="ts">
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
-import tagListModel from '@/models/tagListModel';
 import FormItem from '@/components/FormItem.vue';
 import Button from '@/components/Button.vue';
 
 @Component({components: {Button, FormItem}})
 export default class EditedLabel extends Vue{
-  tag?:{id:string,name:string}=undefined
+  tag?:tag =undefined
 
   created() {
-    const id = this.$route.params.id
-    tagListModel.fetch()//获取数据
-    const tag = tagListModel.data.filter(tag => tag.id === id)[0]
-    //让tag和this.$route.id关联
-    if(tag){
-     this.tag = tag
-    }else{
+    this.tag = window.findTag(this.$route.params.id)
+    if(!this.tag) {
       this.$router.replace('/404')
     }
   };
   update(name:string){
     if(this.tag){
-        tagListModel.updateTag(this.tag.id,name)
+      window.updateTag(this.tag.id,name)
     }
   };
   remove(){
-    if (this.tag){ tagListModel.removeTag(this.tag.id)}
+    if (this.tag){ window.removeTag(this.tag.id)}
     window.alert('删除成功')
     this.goBack()
   };
