@@ -8,6 +8,7 @@ type TagListModel = {
     fetch:()=>tag[],
     create:(name:string)=>'success' | 'duplicated',//联合类型，是字符串的子类型
     updateTag:(id:string,name:string)=>'success'|'duplicated'|'not found',
+    removeTag:(id:string)=>boolean
     save:()=>void
 }
 const tagListModel:TagListModel = {
@@ -41,6 +42,18 @@ const tagListModel:TagListModel = {
     },
     save(){
         window.localStorage.setItem(localStoryKey,JSON.stringify(this.data))
-    }
+    },
+    removeTag(id: string) {
+        let index = -1;
+        for (let i = 0; i < this.data.length; i++) {
+            if (this.data[i].id === id) {
+                index = i;
+                break;
+            }
+        }
+        this.data.splice(index, 1);
+        this.save();
+        return true;
+    },
 }
 export default tagListModel
