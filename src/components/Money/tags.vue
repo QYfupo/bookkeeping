@@ -20,7 +20,7 @@ export default class Tags extends Vue{
   selectedTag:string[] = [];
   toggle(tag:string){
     const index = this.selectedTag.indexOf(tag)
-    if(this.selectedTag.indexOf(tag) >= 0){
+    if(index >= 0){
       this.selectedTag.splice(index,1)
     }else{
       this.selectedTag.push(tag)

@@ -1,15 +1,19 @@
-const localStoryKey = 'recordList'
+import clone from '@/lib/clone';
+
+const localStorageKey = 'recordList'
 const recordListModel = {
-    data:[],
+    data:[] as RecordItem[],
     fetch(){
-      this.data =JSON.parse(window.localStorage.getItem(localStoryKey) || '[]')
+      this.data =JSON.parse(window.localStorage.getItem(localStorageKey) || '[]')
        return this.data
     },
     save(){
-        window.localStorage.setItem(localStoryKey,JSON.stringify(this.data))
+        window.localStorage.setItem(localStorageKey,JSON.stringify(this.data))
     },
-    clone(data:RecordItem | RecordItem[]){
-       return JSON.parse(JSON.stringify(data))
+    create(record:RecordItem){
+       const record2:RecordItem=clone(record)
+       record2.createTime = new Date()
+        this.data.push(record2)
     }
 }
 export default recordListModel
