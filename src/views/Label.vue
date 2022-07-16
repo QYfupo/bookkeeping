@@ -20,16 +20,17 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Button from '@/components/Button.vue';
+import store from '@/store/index2';
 
-window.tagList//获取data，加载数据
+// store.tagList//获取data，加载数据
 @Component({
   components: {Button}
 })
 export default class Label extends Vue{
-    tag=window.tagList;
+    tag=store.tagList;
     creatTag(){
       const name = window.prompt('请输入标签名')
-      if(name){ window.createTag(name)}
+      if(name){ store.createTag(name)}
     }
 }
 </script>
