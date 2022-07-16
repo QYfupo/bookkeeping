@@ -22,7 +22,6 @@ import {Component} from 'vue-property-decorator';
 import Button from '@/components/Button.vue';
 import store from '@/store/index2';
 
-// store.tagList//获取data，加载数据
 @Component({
   components: {Button}
 })

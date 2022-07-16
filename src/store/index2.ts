@@ -1,8 +1,8 @@
-import recordListStore from '@/store/recordListStore';
-import tagListStore from '@/store/tagListStore';
+import recordStore from '@/store/recordStore';
+import tagStore from '@/store/tagStore';
 
 const store = {
-    ...recordListStore,
-    ...tagListStore
+    ...recordStore,
+    ...tagStore
 }
 export default store
