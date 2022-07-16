@@ -5,7 +5,7 @@
         <div class="notes">
         <FormItem @update:value="onUpdateNote" field-name="备注" placeholder="点击添加备注"/>
         </div>
-        <tags :tag-source.sync="tag" @update:value="onUpdateSelected"/>
+        <tags />
         <type :value.sync="record.type" />
       </layout>
     </div>
@@ -22,13 +22,8 @@ import store from '@/store/index2';
 
 @Component({components: {Tags, FormItem, Type, NumberPad}})
 export default  class Money extends Vue{
-  tag= store.tagList;
   record:RecordItem = {tag:[],notes:'',type:'-',amount:0};
   recordList= store.recordList;
-
-  onUpdateSelected(value:string[]){
-    this.record.tag = value
-  };
 
   onUpdateNote(value:string){
     this.record.notes = value
