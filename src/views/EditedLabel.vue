@@ -39,11 +39,14 @@ export default class EditedLabel extends Vue{
     }
   };
   update(name:string){
-    if(this.tag){tagListModel.updateTag(this.tag.id,name)}
+    if(this.tag){
+        tagListModel.updateTag(this.tag.id,name)
+    }
   };
   remove(){
     if (this.tag){ tagListModel.removeTag(this.tag.id)}
     window.alert('删除成功')
+    this.goBack()
   };
   goBack(){
     this.$router.back()
