@@ -20,16 +20,22 @@
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import Button from '@/components/Button.vue';
-import store from '@/store/index2';
+import store from '@/store/index';
 
 @Component({
-  components: {Button}
+  components: {Button},
 })
 export default class Label extends Vue{
-    tag=store.tagList;
+  get tag(){
+    return this.$store.state.tagList
+  };
+  created(){
+    store.commit('fetchTag')
+  }
     creatTag(){
-      const name = window.prompt('请输入标签名')
-      if(name){ store.createTag(name)}
+      const name = window.prompt('请输入新增标签')?.toString().trim()
+      if(!name){return window.alert('标签不能为空')}
+      store.commit('createTag',name)
     }
 }
 </script>

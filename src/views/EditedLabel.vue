@@ -7,7 +7,7 @@
   </div>
   <div class="FormItem-wrapper">
     <FormItem field-name="标签名" placeholder="点击输入标签名"
-    :value="tag.name" @update:value="update"
+    :value="currentTag.name" @update:value="update"
     ></FormItem>
   </div>
   <div class="button-wrapper">
@@ -21,27 +21,29 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import FormItem from '@/components/FormItem.vue';
 import Button from '@/components/Button.vue';
-import store from '@/store/index2';
+import store from '@/store/index';
 
 @Component({components: {Button, FormItem}})
 export default class EditedLabel extends Vue{
-  tag?:tag =undefined
-
+  get currentTag(){
+    return this.$store.state.currentTag
+  }
   created() {
-    this.tag = store.findTag(this.$route.params.id)
-    if(!this.tag) {
-      this.$router.replace('/404')
+    const id = this.$route.params.id;
+    this.$store.commit('fetchTag')
+    this.$store.commit('setCurrentTag', id);
+    if (!this.currentTag) {
+        this.$router.replace('/404');
     }
   };
   update(name:string){
-    if(this.tag){
-     store.updateTag(this.tag.id,name)
+    if(this.currentTag){
+     store.commit('updateTag',{id:this.currentTag.id,name})
     }
   };
   remove(){
-    if (this.tag){ store.removeTag(this.tag.id)}
+    if (this.currentTag){ store.commit('removeTag',this.currentTag.id)}
     window.alert('删除成功')
-    this.goBack()
   };
   goBack(){
     this.$router.back()
