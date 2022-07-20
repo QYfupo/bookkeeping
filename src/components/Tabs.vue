@@ -1,11 +1,10 @@
 <template>
-  <div>
     <ul class="tabs" >
       <li v-for="item in dataSource" :key="item.value"
           :class="{selected: value===item.value, [classPrefix +'-tabs-item']:classPrefix}"
+          class="tabs-item"
           @click="selectedType(item)">{{item.text}}</li>
     </ul>
-  </div>
 </template>
 
 <script lang="ts">
@@ -22,22 +21,21 @@ export default class Tabs extends Vue{
    this.$emit('update:value',item.value)
   }
 
-
 }
 </script>
 
 <style scoped lang="scss">
 .tabs{
   display: flex;
-  flex-direction: row;
-  height:64px;
   background: #ffd944;
   text-align: center;
   font-size: 24px;
-  > li{
+  &-item{
     width: 50%;
-    line-height: 64px;
     height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
     &.selected::after{
       content: '';
