@@ -3,6 +3,7 @@
       <li v-for="item in dataSource" :key="item.value"
           :class="{selected: value===item.value, [classPrefix +'-tabs-item']:classPrefix}"
           class="tabs-item"
+          :style="{height:height}"
           @click="selectedType(item)">{{item.text}}</li>
     </ul>
 </template>
@@ -16,6 +17,7 @@ export default class Tabs extends Vue{
   @Prop(String) readonly value! :string //'-'代表支出，'+'代表收入
   @Prop(String) classPrefix?:String
   @Prop({required:true,type:Array}) readonly dataSource!:{text:String,value:String}[]
+  @Prop({type:String,default:'64px'}) height!:String
 
   selectedType(item:{text:String,value:String}){
    this.$emit('update:value',item.value)
