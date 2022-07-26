@@ -24,14 +24,18 @@ body{
   :focus {
     outline: none;
   }
-  @media (min-width: 500px) {
+  #app{
+    max-width:500px;
+  }
+  @media screen and (min-width:501px) {
     #app{
+      width: 500px;
+      background: #42b983;
       position: fixed;
-      left: 50%;
+      left:50%;
       transform: translate(-50%);
     }
   }
-
 }
 *{margin: 0;padding: 0;box-sizing: border-box;}
 </style>
