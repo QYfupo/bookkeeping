@@ -24,6 +24,14 @@ body{
   :focus {
     outline: none;
   }
+  @media (min-width: 500px) {
+    #app{
+      position: fixed;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  }
+
 }
 *{margin: 0;padding: 0;box-sizing: border-box;}
 </style>
