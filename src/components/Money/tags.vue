@@ -26,6 +26,9 @@ export default class Tags extends Vue{
   }
   selectedTag:string[] = [];
 
+  get selectTags() {
+    return this.selectedTag
+  }
   toggle(tag:string) {
     const index = this.selectedTag.indexOf(tag);
     if (index >= 0) {

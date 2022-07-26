@@ -1,99 +1,139 @@
 <template>
-    <layout>
-     <Tabs :value.sync="type"  :data-source="typeList" class-prefix="type"/>
-     <Tabs :value.sync="interval"  :data-source="intervalList" class-prefix="interval" height="48px"/>
+  <layout>
+    <Tabs :value.sync="type" :data-source="typeList" class-prefix="type"
+    />
     <ol>
-      <li v-for="group in result" :key="group.title">
-        <h3 class="title">{{group.title}}</h3>
+      <li v-for="(group, index) in groupedList" :key="index">
+        <h3 class="title">{{beautify(group.title)}} <span>￥{{group.total}}</span></h3>
         <ol>
-          <li v-for="item in group.items" :key="item.id"  class="record" >
+          <li v-for="item in group.items" :key="item.id"
+              class="record">
             <span>{{tagString(item.tag)}}</span>
-            <span class="notes">{{item.notes}}</span>
-            <span> ￥{{item.amount}}</span>
+            <span class="statisticsNotes">{{item.notes}}</span>
+            <span>￥{{item.amount}} </span>
           </li>
         </ol>
       </li>
     </ol>
-    </layout>
+  </layout>
 </template>
 
- <script lang="ts">
+<script lang="ts">
 
 import Vue from 'vue';
 import Tabs from '@/components/Tabs.vue';
 import {Component} from 'vue-property-decorator';
-import intervalList from '@/constants/intervalList';
 import recordTypeList from '@/constants/recordTypeList';
+import dayjs from 'dayjs';
+import clone from '@/lib/clone';
+
 @Component({
   components: {Tabs}
 })
-export default class Statistics extends Vue{
+export default class Statistics extends Vue {
   type = '-';
-  interval = 'day';
-  intervalList = intervalList;
   typeList = recordTypeList;
-  get recordList(){
-    return (this.$store.state as RootState).recordList
-  };
-  get result(){
-    const {recordList}=this
-    type HashTableValue={title:string,items:RecordItem[]}//一组
 
-    const hashTable:{ [key:string] : HashTableValue } ={}
-    for(let i=0;i<recordList.length;i++){
-      const [data,time]= recordList[i].createTime!.split('T')
-      //以data作爲hashTable的key，
-       hashTable[data] = hashTable[data]||{title:data,items:[]}
-      //key不會重複
-       hashTable[data].items.push(recordList[i])
+  get recordList() {
+    return (this.$store.state as RootState).recordList;
+  };
+
+  get groupedList() {
+    const {recordList} = this;
+    const newList = clone(recordList)
+        .filter(r => r.type === this.type)
+        .sort((a, b) => dayjs(b.createTime).valueOf() - dayjs(a.createTime).valueOf());
+    if (newList.length === 0) {return [] as Result;}
+
+    type Result = { title: string, total?: number, items: RecordItem[] }[]
+    const result: Result = [{title: dayjs(newList[0].createTime).format('YYYY-MM-DD'), items: [newList[0]]}];
+
+    for (let i = 1; i < newList.length; i++) {
+      const current = newList[i];
+      const last = result[result.length - 1];
+      if (dayjs(last.title).isSame(dayjs(current.createTime), 'day')) {
+        last.items.push(current);
+      } else {
+        result.push({title: dayjs(current.createTime).format('YYYY-MM-DD'), items: [current]});
+      }
     }
-    return hashTable
+    result.map(group => {
+      group.total = group.items.reduce((sum, item) => {
+        return sum + item.amount;
+      }, 0);
+    });
+    return result;
   };
 
-  created(){
-    this.$store.commit('fetchRecords')
+  beforeCreate() {
+    this.$store.commit('fetchRecords');
   };
 
-  tagString(tag:tag[]){
-    return tag.length ===0 ? '无': tag.join(',')
+  tagString(tag: tag[]) {
+    return tag.length===0? '无':tag.map(i=>i.name).join('，');
+  };
+
+
+  beautify(groupTitle: string) {
+    const groupTitleDay = dayjs(groupTitle);
+    const now = dayjs();
+    const yesterday = now.subtract(1, 'day');
+    const qiantian = now.subtract(2, 'day');
+    if (groupTitleDay.isSame(now, 'day')) {
+      return '今天';
+    } else if (groupTitleDay.isSame(yesterday, 'day')) {
+      return '昨天';
+    } else if (groupTitleDay.isSame(qiantian, 'day')) {
+      return '前天';
+    } else if (groupTitleDay.isSame(now, 'year')) {
+      return groupTitleDay.format('M月D日');
+    } else {
+      return groupTitleDay.format('YYY年M月D日');
+    }
   }
 }
+
+
 </script>
- <style lang="scss" scoped>
+<style lang="scss" scoped>
 ::v-deep {
   .type-tabs-item {
-    background: #d9d9d9;
-
+    background: #ffd944;
     &.selected {
-      background: #ffd944;
-
+      background: #d9d9d9;
       &::after {
-        display: none;
+        //display: none;
       }
     }
   }
+
   .interval-tabs-item {
     font-size: 20px;
   }
 }
+
 %item {
   padding: 8px 16px;
   line-height: 24px;
   display: flex;
   justify-content: space-between;
-  align-content: center;
+  align-items: center;
 }
+
 .title {
   @extend %item;
 }
+
 .record {
   background: white;
   @extend %item;
 }
-.notes {
+
+.statisticsNotes {
   margin-right: auto;
   margin-left: 16px;
+  font-size: 10px;
   color: #999;
 }
 
- </style>
+</style>
