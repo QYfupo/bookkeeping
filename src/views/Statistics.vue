@@ -1,8 +1,7 @@
 <template>
   <layout>
-    <Tabs :value.sync="type" :data-source="typeList" class-prefix="type"
-    />
-    <ol>
+    <Tabs :value.sync="type" :data-source="typeList" class-prefix="type"/>
+    <ol v-if="groupedList.length>0">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">{{beautify(group.title)}} <span>￥{{group.total}}</span></h3>
         <ol>
@@ -15,6 +14,10 @@
         </ol>
       </li>
     </ol>
+    <div v-else class="description">
+      <Icons name="nodata"></Icons>
+     <span>暂时没有数据统计...</span>
+    </div>
   </layout>
 </template>
 
@@ -134,6 +137,15 @@ export default class Statistics extends Vue {
   margin-left: 16px;
   font-size: 10px;
   color: #999;
+}
+.description{
+  display: flex;
+  flex-direction: column;
+  margin: 100px 20px;
+  align-items: center;
+  &.icon{
+    margin-bottom: 10px;
+  }
 }
 
 </style>

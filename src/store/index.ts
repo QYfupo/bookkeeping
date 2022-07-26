@@ -19,7 +19,6 @@ const store= new Vuex.Store({
       },
       createRecord(state, record){
           const record2:RecordItem=clone(record)
-          console.log("record", record)
           record2.createTime = new Date().toISOString()
           state.recordList.push(record2)
           store.commit('saveRecords')
@@ -30,6 +29,13 @@ const store= new Vuex.Store({
 
       fetchTag(state) {
          state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
+         if(!state.tagList|| state.tagList.length===0){
+             state.tagList =[
+                 {id:'1',name:'衣'},
+                 {id:'2',name:'食'},
+                 {id:'3',name:'住'},
+                 {id:'4',name:'行'}]
+         }
       },
       createTag(state, name: string) {
           const names = state.tagList.map(item => item.name);
